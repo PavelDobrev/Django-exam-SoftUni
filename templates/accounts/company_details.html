@@ -1,0 +1,21 @@
+{% extends 'web/base.html' %}
+{% load forms %}
+
+{% block content %}
+
+
+
+
+  <div class="job-details mt-5">
+    <h1 class="job-title">{{ object.company_name }}</h1>
+    <p class="company-name">{{ object.company_site }}</p>
+    <p class="company-name">{{ object.company_addres }}</p>
+    <div class="job-description">
+      <p>{{ object.company_info }}</p>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

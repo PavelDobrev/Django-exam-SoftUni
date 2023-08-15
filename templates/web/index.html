@@ -1,0 +1,28 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+
+
+    <div class="container">
+        <h1 class="mb-4">Обяви за работа</h1>
+        <table class="table table-bordered custom-table">
+            <thead>
+            <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Позиция</th>
+                <th scope="col">Заплата</th>
+            </tr>
+            </thead>
+            <tbody>{% for advertisement in advertisements %}
+                <tr>
+
+                        <td>{{ advertisement.creation_date }}</td>
+                        <td><a href="{% url 'details_job' advertisement.pk %}">{{ advertisement.title }}</a></td>
+                        <td>${{ advertisement.salary }} </td>
+
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

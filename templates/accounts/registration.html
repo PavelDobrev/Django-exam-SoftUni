@@ -1,0 +1,36 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+<div class="registration-form">
+    <h2 class="mb-4">Registration Form</h2>
+
+
+    <form method="post" action="{% url 'registration_user' %}">
+        {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+    </div>
+    <div class="form-group">
+        <label for="userType">UserType</label>
+        {{ form.user_type }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}">Password</label>
+        {{ form.password1 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+        {{ form.password2 }}
+    </div>
+
+        <button type="submit" class="btn btn-primary">Registration</button>
+        <button type="reset" class="btn btn-danger">Clear</button>
+    </form>
+</div>
+
+    </div>
+{% endblock %}

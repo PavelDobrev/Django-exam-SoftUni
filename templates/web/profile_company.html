@@ -1,0 +1,39 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+    {% load forms %}
+<div class="red-banner">
+  Please verify account
+</div>
+
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+        <div class="registration-form">
+            <h2 class="mb-4">Company Profile</h2>
+
+            <form method="post" action="{% url 'save_company' %}">
+                {% csrf_token %}
+                                <div class="form-group">
+                    <label for="{{ form.username.company_name }}">Company name</label>
+                    {{ form.company_name|form_field_class:'form-control' }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.username.company_info }}">Company info</label>
+                    {{ form.company_info|form_field_class:'form-control' }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.username.company_site }}">Site</label>
+                    {{ form.company_site|form_field_class:'form-control' }}
+                </div>
+                                <div class="form-group">
+                    <label for="{{ form.username.company_addres }}">Addres</label>
+                    {{ form.company_addres|form_field_class:'form-control' }}
+                </div>
+
+               <button type="submit" class="btn btn-primary">Registration</button>
+                <button type="reset" class="btn btn-danger">Clear</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

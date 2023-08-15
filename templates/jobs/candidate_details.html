@@ -1,0 +1,30 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+
+
+
+    <div class="content-container">
+
+        <div class="job-container">
+            <h1>{{ job.title }}</h1>
+            <p>{{ job.description }}</p>
+            <p>Salary: {{ job.salary }}</p>
+        </div>
+
+        <div class="candidates">
+            {% for candidate in candidates %}
+                <div class="candidate-container">
+                    <h2>Candidate</h2>
+                    <p><strong>CV:</strong> {{ candidate.cv }}</p>
+                    <p><strong>Motivation:</strong> {{ candidate.user_motivation }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

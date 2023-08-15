@@ -1,0 +1,42 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+
+
+    <div class="container mt-5">
+        <table class="table">My Jobs
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Position</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>    {{ job.creation_date }}</td>
+                    <td>    {{ job.title }}</td>
+                    <td>
+
+                        <a href="{% url 'views_candidate' job.id %}" class="btn btn-success">{{ job.num_applicants }} - Candidates</a>
+
+                        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
+
+                    </td>
+                </tr>{% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+{% endblock %}
