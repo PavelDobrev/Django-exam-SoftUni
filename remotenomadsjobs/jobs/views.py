@@ -7,6 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.text import slugify
 from django.views import generic as views
 from django.shortcuts import render, get_object_or_404, redirect
+from form import form
 
 from remotenomadsjobs.accounts.models import CompanyUserModel
 from remotenomadsjobs.jobs.models import JobsModel, JobApplication
@@ -53,6 +54,7 @@ class UserAppView(views.CreateView):
 
     def get_success_url(self):
         return reverse_lazy('dashboard')
+
 
 
 class CreatJobView(user_is_verify, user_is_company, views.CreateView):

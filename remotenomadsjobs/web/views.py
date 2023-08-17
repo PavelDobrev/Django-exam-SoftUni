@@ -48,6 +48,15 @@ class indexView(views.DetailView):
     def get(self, request, *args, **kwargs):
         advertisements = JobsModel.objects.all()
 
+
+
+        for advertisement in advertisements:
+            company_user = CompanyUserModel.objects.get(user_id=advertisement.company_id)
+            advertisement.company_user = company_user
+
+
+
+
         return render(request, self.template_name, {'advertisements': advertisements})
 
 
@@ -83,7 +92,7 @@ class DashboardView(user_is_verify, auth_views.TemplateView):
 class CompanyProfileCreatView(views.CreateView):
     template_name = 'web/profile_company.html'
     model = CompanyUserModel
-    fields = ('company_name', 'company_info', 'company_site', 'company_addres')
+    fields = ('company_name', 'company_info', 'company_site', 'company_addres', 'logo',)
 
     def form_valid(self, form):
         form.instance.user = self.request.user

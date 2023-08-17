@@ -2,7 +2,7 @@
 {% load forms %}
 
 {% block content %}
-    <form method="post" action="{% url 'user_app'  pk_from_url %}">
+    <form method="post" action="{% url 'user_app'  pk_from_url %}" enctype="multipart/form-data">
         {% csrf_token %}
 
 

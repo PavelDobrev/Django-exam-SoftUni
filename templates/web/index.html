@@ -11,14 +11,21 @@
                 <th scope="col">Дата</th>
                 <th scope="col">Позиция</th>
                 <th scope="col">Заплата</th>
+                <th scope="col">Комопания</th>
+
             </tr>
             </thead>
             <tbody>{% for advertisement in advertisements %}
                 <tr>
 
-                        <td>{{ advertisement.creation_date }}</td>
-                        <td><a href="{% url 'details_job' advertisement.pk %}">{{ advertisement.title }}</a></td>
-                        <td>${{ advertisement.salary }} </td>
+                    <td>{{ advertisement.creation_date }}</td>
+                    <td><a href="{% url 'details_job' advertisement.pk %}">{{ advertisement.title }}</a></td>
+                    <td>${{ advertisement.salary }} </td>
+                    <td>
+                        <a href="{% url 'company_details' advertisement.company_user.pk %}" >
+                        <img src="{{ advertisement.company_user.logo.url }}" width="50" height="50">
+                        {{ advertisement.company_user.company_name }}</a>
+                    </td>
 
                 </tr>{% endfor %}
             </tbody>

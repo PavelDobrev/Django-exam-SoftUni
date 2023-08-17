@@ -85,5 +85,6 @@ class CompanyUserModel(models.Model):
     company_info = models.TextField(max_length=600)
     company_site = models.CharField(max_length=200)
     company_addres = models.CharField(max_length=200)
+    logo = models.FileField(upload_to='company_logo/')
 
 
