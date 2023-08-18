@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: paffcorp/for_deploy_demo
+    image: for_deploy_demo
     build: .
     command: gunicorn --bind=0.0.0.0:8000 remotenomadsjobs.wsgi:application
     ports:
@@ -32,7 +32,7 @@ services:
   nginx:
     image: nginx
     ports:
-      - 81:80
+      - 80:80
       - 443:443
     volumes:
       - ./tmp/for_deploy/static:/home/app/web/staticfiles
