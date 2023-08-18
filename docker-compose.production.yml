@@ -12,8 +12,10 @@ services:
 
     volumes:
       - /tmp/for_deploy/static:/app/static/
-
-
+    platform: linux/amd64
+    links:
+      - postgres
+    
   postgres:
     image: postgres
     restart: always
