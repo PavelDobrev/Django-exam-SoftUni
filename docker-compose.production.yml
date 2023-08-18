@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: for_deploy_demo
+    image: paffcorp/for_deploy_demo
     build: .
     command: gunicorn --bind=0.0.0.0:8000 remotenomadsjobs.wsgi:application
     ports:
