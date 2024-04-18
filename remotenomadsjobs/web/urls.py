@@ -1,11 +1,11 @@
 from django.urls import path
 
-from remotenomadsjobs.web.views import indexView, DashboardView, CompanyProfileCreatView, UserProfileCreatView, \
-    CompanyProfileUpdateView, UserProfileUpdateView, ProfileUpdateView, ContactFormView
+from remotenomadsjobs.web.views import IndexView, DashboardView, CompanyProfileCreatView, UserProfileCreatView, \
+    CompanyProfileUpdateView, UserProfileUpdateView, ProfileUpdateView, ContactFormView, delete_account
 
 urlpatterns = (
 
-    path('', indexView.as_view(), name='index'),
+    path('', IndexView.as_view(), name='index'),
     path("dashboard/", DashboardView.as_view(), name='dashboard'),
 
     path("save_user/", UserProfileCreatView.as_view(), name='save_user'),
@@ -16,4 +16,7 @@ urlpatterns = (
     path("user_profile/", UserProfileUpdateView.as_view(), name='update_user_profile'),
 
     path("contact/", ContactFormView.as_view(), name='contact_form'),
+
+    path('delete-account/<int:pk>/', delete_account, name='delete_account'),
+
 )

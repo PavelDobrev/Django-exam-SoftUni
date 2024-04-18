@@ -4,12 +4,12 @@
 {% block content %}
 
 
-<form method="post" action="{% url 'creat_job' %}">
-                {% csrf_token %}
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <form method="post" action="{% url 'creat_job' %}">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
-        <div class="registration-form">
-            <h2 class="mb-4">New Job</h2>
+            <div class="registration-form">
+                <h2 class="mb-4">New Job</h2>
                 <div class="form-group">
                     <label for="{{ form.username.title }}">Position</label>
                     {{ form.title|form_field_class:'form-control' }}
@@ -19,8 +19,14 @@
                 <div class="form-group">
                     <label for="{{ form.username.salary }}">salary</label>
                     {{ form.salary|form_field_class:'form-control' }}
+                    {% if form.salary.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.salary.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-
 
                 <div class="form-group">
                     <label for="{{ form.username.descriptionl }}">description</label>
@@ -28,13 +34,13 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>
-                        <button type="reset" class="btn btn-danger">Clear</button>
+                <button type="reset" class="btn btn-danger">Clear</button>
 
+
+            </div>
 
         </div>
 
-    </div>
 
-
-</form>
+    </form>
 {% endblock %}

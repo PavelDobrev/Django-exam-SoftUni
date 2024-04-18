@@ -4,37 +4,19 @@
 {% block content %}
 
 
-
-    <div class="container-form">
+    <div style="min-height: 100vh;">
         <div class="row">
             <div class="col-lg-6 mx-auto">
                 <form class="contact-form" method="post" action="{% url 'contact_form' %}">
                     {% csrf_token %}
                     <h2 class="text-center mb-4">Contact Us</h2>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-
-                        <input type="email" class="form-control" id="email" name="email" required>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-
-                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                    </div>
+                    {{ form }}
                     <button type="submit" class="btn btn-primary btn-block">Send Message</button>
                 </form>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 {% endblock %}

@@ -1,24 +1,22 @@
-import kwargs as kwargs
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
-from django.utils.text import slugify
+
+from django.urls import reverse_lazy
 from django.views import generic as views
-from django.shortcuts import render, get_object_or_404, redirect
-from form import form
+from django.views.generic import CreateView
+from django.shortcuts import get_object_or_404, redirect
 
 from remotenomadsjobs.accounts.models import CompanyUserModel
 from remotenomadsjobs.jobs.models import JobsModel, JobApplication
 from django.contrib.auth import views as auth_views
 
-from remotenomadsjobs.web.views import user_is_verify
+from remotenomadsjobs.web.views import UserisVerify
+
+from .forms import JobForm
 
 
 # Create your views here.
 
-class user_is_company(LoginRequiredMixin):
+class UserisCompany(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if not user.user_type == 'company':
@@ -56,16 +54,14 @@ class UserAppView(views.CreateView):
         return reverse_lazy('dashboard')
 
 
-
-class CreatJobView(user_is_verify, user_is_company, views.CreateView):
+class CreatJobView(UserisVerify, UserisCompany, CreateView):
     template_name = 'jobs/new_job.html'
-    model = JobsModel
-    fields = ('description', 'salary', 'title')
+    form_class = JobForm
 
-    def form_valid(self, form):
-        form.instance.company = self.request.user
-
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super(CreatJobView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy('index')
@@ -107,11 +103,5 @@ class ViewsCandidateView(LoginRequiredMixin, views.TemplateView):
 
 class DeleteJobView(views.DeleteView):
     model = JobsModel
-    template_name = 'jobs/delete_job.html'
-    success_url = reverse_lazy('dashboard')
-
-
-class DeleteJobAppView(views.DeleteView):
-    model = JobApplication
     template_name = 'jobs/delete_job.html'
     success_url = reverse_lazy('dashboard')

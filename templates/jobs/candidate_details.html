@@ -3,30 +3,30 @@
 {% block content %}
 
 
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="content-container">
 
-    <div class="content-container">
+            <div class="job-container">
+                <h1>{{ job.title }}</h1>
+                <p>{{ job.description }}</p>
+                <p>Salary: {{ job.salary }}</p>
+            </div>
+            </br>
 
-        <div class="job-container">
-            <h1>{{ job.title }}</h1>
-            <p>{{ job.description }}</p>
-            <p>Salary: {{ job.salary }}</p>
-        </div>
-
-        <div class="candidates">
-            {% for candidate in candidates %}
-                <div class="candidate-container">
-                    <h2>Candidate</h2>
-                    <p><strong>CV:</strong> <a href="{{ candidate.cv.url }}" download>{{ candidate.cv.name }}</a></p>
+            <div class="candidates">
+                {% for candidate in candidates %}
+                    <div class="candidate-container">
+                        <h2>Candidate</h2>
+                        <p><strong>CV:</strong> <a href="{{ candidate.cv.url }}" download>{{ candidate.cv.name }}</a>
+                        </p>
 
 
-                    <p><strong>Motivation:</strong> {{ candidate.user_motivation }}</p>
-                </div>
-            {% endfor %}
+                        <p><strong>Motivation:</strong> {{ candidate.user_motivation }}</p>
+                    </div> </br>
+                {% endfor %}
+            </div>
         </div>
     </div>
-
 {% endblock %}
-
-
 
 

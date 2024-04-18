@@ -4,11 +4,19 @@ services:
   web:
     image: paffcorp/for_deploy_demo
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+         python manage.py flush --no-input &&
+         python manage.py makemigrations &&
+         python manage.py migrate &&
+         python manage.py runserver 0.0.0.0:8000"
+         
     ports:
       - "8000:8000"
     env_file:
       - ./envs/.env
+    volumes:
+      - .:/app
 
   postgres:
     image: postgres
@@ -23,3 +31,20 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+
+
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/ubuntu/app/Django-Exam/static:/usr/share/nginx/html/staticfiles
+      - ./tmp/for_deploy/static:/home/app/web/staticfiles
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    links:
+      - web

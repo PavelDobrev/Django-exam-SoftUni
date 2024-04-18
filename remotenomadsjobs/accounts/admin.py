@@ -1,10 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
-
-
-from django.contrib import admin
-
 from remotenomadsjobs.accounts.models import CompanyUserModel, AppUser
 from remotenomadsjobs.jobs.models import JobsModel
 from remotenomadsjobs.web.models import ContactModel
@@ -26,10 +21,9 @@ class CompanyUserAdmin(admin.ModelAdmin):
     list_display = ('company_name',)
 
 
-
-
 class UserAdmin(admin.ModelAdmin):
     list_display = ('email',)
+
 
 admin.site.register(AppUser, UserAdmin)
 admin.site.register(JobsModel, JobsModelAdmin)

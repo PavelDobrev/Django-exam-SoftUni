@@ -2,31 +2,31 @@
 
 {% block content %}
 
-
-    <div class="container mt-5">
-        <table class="table">My Application
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Position</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for job in job_description %}
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="container mt-5">
+            <table class="table">My Application
+                <thead>
                 <tr>
-                    <td>    {{ job.creation_date }}</td>
-                    <td>    {{ job.title }}</td>
-                    <td>
-                          <a href="{% url 'delete_job_app' job.id %}"class="btn btn-danger">Delete</a>
-                          <a href="" class="btn btn-success">Preview</a>
-                    </td>
-                </tr>{% endfor %}
+                    <th>Date</th>
+                    <th>Position</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for job in job_description %}
+                    <tr>
+                        <td>    {{ job.creation_date }}</td>
+                        <td>    {{ job.title }}</td>
+                        <td>
 
-            </tbody>
-        </table>
+                            <a href="{% url 'details_job' job.id %}" class="btn btn-success">Preview</a>
+                        </td>
+                    </tr>{% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 

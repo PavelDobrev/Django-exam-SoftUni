@@ -11,7 +11,7 @@
 
             <form method="post" action="{% url 'update_company_profile' %}">
                 {% csrf_token %}
-                                <div class="form-group">
+                <div class="form-group">
                     <label for="{{ form.username.company_name }}">Company name</label>
                     {{ form.company_name|form_field_class:'form-control' }}
                 </div>
@@ -23,14 +23,16 @@
                     <label for="{{ form.username.company_site }}">Site</label>
                     {{ form.company_site|form_field_class:'form-control' }}
                 </div>
-                                <div class="form-group">
+                <div class="form-group">
                     <label for="{{ form.username.company_addres }}">Addres</label>
                     {{ form.company_addres|form_field_class:'form-control' }}
                 </div>
 
 
-               <button type="submit" class="btn btn-primary">Save</button>
-                <button type="reset" class="btn btn-danger">Clear</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'delete_account' pk=user.id %}  " class="btn btn-warning">Delete Account</a>
+
+
             </form>
         </div>
     </div>

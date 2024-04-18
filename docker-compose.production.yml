@@ -11,7 +11,7 @@ services:
       - ./envs/.env
 
     volumes:
-      - /tmp/for_deploy/static:/app/static/
+      - .:/code 
     platform: linux/amd64
     links:
       - postgres

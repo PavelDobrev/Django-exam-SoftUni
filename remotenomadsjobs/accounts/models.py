@@ -1,9 +1,7 @@
-from django import forms
 from django.contrib.auth.hashers import make_password
 from django.db import models
 from django.contrib.auth import models as auth_models, get_user_model
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.http import request
 
 
 # Create your models here.
@@ -41,7 +39,6 @@ class AppUserManager(auth_models.BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-
 class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'
 
@@ -53,10 +50,9 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         unique=True,
     )
 
-    is_staff = models. BooleanField(
+    is_staff = models.BooleanField(
         default=False,
     )
-
 
     USER_TYPE_CHOICES = (
         ('user', 'User'),
@@ -69,7 +65,9 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         null=True,
     )
 
+
 UserModel = get_user_model()
+
 
 class RegularUserModel(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
@@ -79,6 +77,7 @@ class RegularUserModel(models.Model):
 
     user_telephone = models.CharField(max_length=50)
 
+
 class CompanyUserModel(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     company_name = models.CharField(max_length=100)
@@ -86,5 +85,3 @@ class CompanyUserModel(models.Model):
     company_site = models.CharField(max_length=200)
     company_addres = models.CharField(max_length=200)
     logo = models.FileField(upload_to='company_logo/')
-
-

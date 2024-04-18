@@ -1,30 +1,27 @@
-import self
-from django import views, forms
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import views as auth_views, get_user_model
-from django.contrib.auth.models import User
-from django.db.models import Count
-from django.http import request, HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views import generic as views, View
-from django.views.generic import CreateView
-from form import form
 
-from remotenomadsjobs.accounts.models import RegularUserModel, CompanyUserModel
+from django.db.models import Count
+
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views import generic as views
+
+from remotenomadsjobs.accounts.models import RegularUserModel, CompanyUserModel, AppUser
 from remotenomadsjobs.jobs.models import JobsModel, JobApplication
-from remotenomadsjobs.web.models import ContactModel
+
+from .forms import ContactForm, Deletea
+from .models import ContactModel
 
 UserModel = get_user_model()
 
-class user_is_verify(LoginRequiredMixin):
+
+class UserisVerify(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
 
         if not user.pk:
             return self.handle_no_permission()
-
 
         if user.user_type == 'user':
             try:
@@ -39,37 +36,24 @@ class user_is_verify(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-
-
-
-class indexView(views.DetailView):
+class IndexView(views.DetailView):
     template_name = 'web/index.html'
 
     def get(self, request, *args, **kwargs):
         advertisements = JobsModel.objects.all()
 
-
-
         for advertisement in advertisements:
             company_user = CompanyUserModel.objects.get(user_id=advertisement.company_id)
             advertisement.company_user = company_user
 
-
-
-
         return render(request, self.template_name, {'advertisements': advertisements})
 
 
-
-
-
-class DashboardView(user_is_verify, auth_views.TemplateView):
+class DashboardView(UserisVerify, auth_views.TemplateView):
     template_name = 'web/dashboard.html'
 
     def get(self, request, *args, **kwargs):
         user = request.user
-
-
 
         if user.user_type == 'user':
             current_user_id = request.user.id
@@ -103,7 +87,7 @@ class CompanyProfileCreatView(views.CreateView):
         return reverse_lazy('index')
 
 
-class UserProfileCreatView( views.CreateView):
+class UserProfileCreatView(views.CreateView):
     template_name = 'web/profile_user.html'
     model = RegularUserModel
     fields = ('first_name', 'last_name', 'user_motivation', 'user_telephone')
@@ -117,7 +101,7 @@ class UserProfileCreatView( views.CreateView):
         return reverse_lazy('index')
 
 
-class ProfileUpdateView(user_is_verify, views.TemplateView):
+class ProfileUpdateView(UserisVerify, views.TemplateView):
     def get(self, request, *args, **kwargs):
         user = request.user
 
@@ -130,7 +114,7 @@ class ProfileUpdateView(user_is_verify, views.TemplateView):
         return render(request, 'web/dashboard.html')
 
 
-class UserProfileUpdateView(user_is_verify, views.UpdateView):
+class UserProfileUpdateView(UserisVerify, views.UpdateView):
     model = RegularUserModel
     template_name = 'web/user_update_profile.html'
     success_url = reverse_lazy('update_profile')
@@ -144,7 +128,7 @@ class UserProfileUpdateView(user_is_verify, views.UpdateView):
         return super().form_valid(form)
 
 
-class CompanyProfileUpdateView(user_is_verify, views.UpdateView):
+class CompanyProfileUpdateView(UserisVerify, views.UpdateView):
     model = CompanyUserModel
     template_name = 'web/company_update_profile.html'
     success_url = reverse_lazy('update_profile')
@@ -160,6 +144,23 @@ class CompanyProfileUpdateView(user_is_verify, views.UpdateView):
 
 class ContactFormView(views.CreateView):
     model = ContactModel
+    form_class = ContactForm
     template_name = 'web/contact_form.html'
-    fields = ('email', 'name', 'message')
     success_url = reverse_lazy('index')
+
+
+def delete_account(request, pk):
+    userd = AppUser.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = Deletea(request.POST, instance=userd)
+        if form.is_valid():
+            JobsModel.objects.filter(company_id=pk).delete()
+            JobApplication.objects.filter(user_id=pk).delete()
+            form.save()
+            return redirect('index')
+    else:
+        form = Deletea(instance=userd)
+
+    context = {'form': form}
+
+    return render(request, 'web/delete_account.html', context)

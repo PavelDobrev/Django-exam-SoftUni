@@ -2,34 +2,38 @@
 
 {% block content %}
 
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="container">
+            {% if advertisements %}
+                <h1 class="mb-4">Jobs</h1>
+                <table class="table table-bordered custom-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Company</th>
 
-    <div class="container">
-        <h1 class="mb-4">Обяви за работа</h1>
-        <table class="table table-bordered custom-table">
-            <thead>
-            <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Позиция</th>
-                <th scope="col">Заплата</th>
-                <th scope="col">Комопания</th>
+                    </tr>
+                    </thead>
+                    <tbody>{% for advertisement in advertisements %}
+                        <tr>
 
-            </tr>
-            </thead>
-            <tbody>{% for advertisement in advertisements %}
-                <tr>
+                            <td>{{ advertisement.creation_date }}</td>
+                            <td><a href="{% url 'details_job' advertisement.pk %}">{{ advertisement.title }}</a></td>
+                            <td>${{ advertisement.salary }} </td>
+                            <td>
+                                <a href="{% url 'company_details' advertisement.company_user.pk %}">
+                                    <img src="{{ advertisement.company_user.logo.url }}" width="50" height="50">
+                                    {{ advertisement.company_user.company_name }}</a>
+                            </td>
 
-                    <td>{{ advertisement.creation_date }}</td>
-                    <td><a href="{% url 'details_job' advertisement.pk %}">{{ advertisement.title }}</a></td>
-                    <td>${{ advertisement.salary }} </td>
-                    <td>
-                        <a href="{% url 'company_details' advertisement.company_user.pk %}" >
-                        <img src="{{ advertisement.company_user.logo.url }}" width="50" height="50">
-                        {{ advertisement.company_user.company_name }}</a>
-                    </td>
-
-                </tr>{% endfor %}
-            </tbody>
-        </table>
+                        </tr>{% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h1 class="mb-4">Тhere are no jobs posted</h1>
+            {% endif %}
+        </div>
     </div>
-
 {% endblock %}

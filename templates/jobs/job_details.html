@@ -4,22 +4,23 @@
 {% block content %}
 
 
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <form method="post" action="{% url 'app'  object.pk %}">
+            {% csrf_token %}
 
-<form method="post" action="{% url 'app'  object.pk %}">
- {% csrf_token %}
+            <div class="job-details mt-5">
+                <h1 class="job-title">{{ object.title }}</h1>
+                <a href="{% url 'company_details' company_user.pk %}"><p
+                        class="company-name"> {{ company_user.company_name }} </p></a>
+                <p class="salary">Salary: {{ object.salary }}</p>
+                <div class="job-description">
+                    <p>{{ object.description }}</p>
+                </div>
+                <button class="apply-button">Apply</button>
+            </div>
 
-  <div class="job-details mt-5">
-    <h1 class="job-title">{{ object.title }}</h1>
-    <a href="{% url 'company_details' company_user.pk %}" > <p class="company-name"> {{ company_user.company_name }} </p></a>
-    <p class="salary">Salary: {{ object.salary }}</p>
-    <div class="job-description">
-      <p>{{ object.description }}</p>
+        </form>
     </div>
-    <button class="apply-button">Кандидатствай сега</button>
-  </div>
-
-</form>
-
 
 
 {% endblock %}
